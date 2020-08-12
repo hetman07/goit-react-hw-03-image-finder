@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 
 export default class Modal extends Component {
+    state = {
+        srcModal: "",
+    }
     componentDidMount() {
         window.addEventListener('keydown', this.handleKeyDown)
     }
@@ -13,12 +16,19 @@ window.removeEventListener('keydown', this.handleKeyDown)
 
     handleKeyDown = e => {
         if(e.code === 'Escape') {
-            this.props.onClose();
+            this.props.onCloseModal();
         }
     }
+
+    handleModalClick = e => {
+        if (e.target.nodeName !== 'IMG') {
+            this.props.onCloseModal(); 
+        }
+    }
+
     render() {
         return (
-            <div className="Overlay">
+            <div className="Overlay" onClick={this.handleModalClick}>
                 <div className="Modal">
                   {this.props.children}  
                 </div>

@@ -76,11 +76,18 @@ class App extends Component {
     });
   };
 
-  toggleModal = (e) => {
-    // const largeImg = e.target.dataset.modal;
+  showModal = (e) => {
+    const largeImg = e.target.dataset.modal;
     this.setState((state) => ({
-      showModal: !state.showModal,
-      // srcModal: largeImg,
+      showModal: true,
+      srcModal: largeImg,
+    }));
+  };
+
+  closeModal = (e) => {
+    this.setState((state) => ({
+      showModal: false,
+      srcModal: "",
     }));
   };
 
@@ -89,15 +96,15 @@ class App extends Component {
     return (
       <>
         {showModal && (
-          <Modal onClose={this.toggleModal}>
-            {/* <img src={srcModal} /> */}
+          <Modal onCloseModal={this.closeModal}>
+            <img src={srcModal} alt="" />
           </Modal>
         )}
         <SearchForm onSubmit={this.handleSearchFormSubmit} />
         {error && <Notification message={error.message} />}
 
         {hits.length > 0 && (
-          <HitsList hits={hits} onShowModal={this.toggleModal} />
+          <HitsList hits={hits} onShowModal={this.showModal} />
         )}
         {isLoading && (
           <Loader
