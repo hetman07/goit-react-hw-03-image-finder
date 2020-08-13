@@ -1,14 +1,25 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import styles from "./Modal.module.css";
 
 export default class Modal extends Component {
+    static propTypes = {
+        state: PropTypes.shape({
+            srcModal: PropTypes.string,
+            }),
+        handleKeyDown: PropTypes.func,
+        handleModalClick: PropTypes.func,
+    }
+
     state = {
         srcModal: "",
     }
+
     componentDidMount() {
         window.addEventListener('keydown', this.handleKeyDown)
     }
     componentWillUnmount() {
-window.removeEventListener('keydown', this.handleKeyDown)
+        window.removeEventListener('keydown', this.handleKeyDown)
     }
 
     //создаем метод класса на создание слушателя для того что бы можно
@@ -28,8 +39,8 @@ window.removeEventListener('keydown', this.handleKeyDown)
 
     render() {
         return (
-            <div className="Overlay" onClick={this.handleModalClick}>
-                <div className="Modal">
+            <div className={styles.Overlay} onClick={this.handleModalClick}>
+                <div className={styles.Modal}>
                   {this.props.children}  
                 </div>
             </div>
